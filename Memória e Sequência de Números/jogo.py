@@ -24,4 +24,4 @@ if __name__ == '__main__':
    
     
  
-    game_loop()  #window=, assets
+    # game_loop()  #window=, assets
