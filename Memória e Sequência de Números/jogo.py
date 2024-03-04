@@ -1,17 +1,21 @@
 import pygame 
 
 
-
-
-
 def inicializa():
+    assets = {}
+
+    font = pygame.font.get_default_font()
+    font = pygame.font.Font(font, 45)
+
+    assets['font'] = font                        #*
+
     window = pygame.display.set_mode((700, 500))
     pygame.display.set_caption('Jogo da Memória')
 
     window.fill((0, 0, 0))
    
 
-    return window
+    return window, assets  ##
 
 
 def recebe_eventos():
@@ -26,29 +30,32 @@ def recebe_eventos():
     return game
 
 
-def desenha(window):
+def desenha(window, assets):
+
     window.fill((0, 0 , 0))
 
-    pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
-    
+    memorize = assets['font'].render(str('MEMORIZE....'), True, (255, 255, 255)) 
+    window.blit(memorize, (200, 150))
 
-    pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
+    caixa_branca = pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
+
+    caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
     
     # pygame.draw.rect(window, (255, 255, 255), (10, 10, 10, 10))
 
     pygame.display.update()
 
-def game_loop(window):     ## equivalente ao while GAME
+def game_loop(window, assets):   ##  ## equivalente ao while GAME
 
 # : receber assets como argumento e repassar para desenha
     while recebe_eventos():  
-        desenha(window)  #adcionar assets depois
+        desenha(window, assets)  ##         #adcionar assets depois
 
 if __name__ == '__main__':
     pygame.init()
         ##-- : receber assets aqui e repassar para game_loop
-    window = inicializa()
+    window, assets = inicializa() ##
    
     # window.fill((0, 0, 0))
  
-    game_loop(window)  #window=, assets
+    game_loop(window,assets)  ##
