@@ -1,15 +1,15 @@
 import pygame 
 
-pygame.init()
 
-window = pygame.display.set_mode((700, 500))
 
-def incializa():
-    # window = pygame.display.set_mode((700, 500))
+
+
+def inicializa():
+    window = pygame.display.set_mode((700, 500))
     pygame.display.set_caption('Jogo da Memória')
 
     window.fill((0, 0, 0))
-    pygame.display.flip()
+   
 
     return window
 
@@ -17,25 +17,37 @@ def incializa():
 def recebe_eventos():
 
     game = True
-    while game:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game = False
-                pygame.quit()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game = False
+            pygame.quit()
+    
+    return game
 
 
-def desenha():
-    pass
+def desenha(window):
+    window.fill((0, 0 , 0))
+
+    pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
+    
+
+    pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
+    
+    # pygame.draw.rect(window, (255, 255, 255), (10, 10, 10, 10))
+
+    pygame.display.update()
 
 def game_loop(window):     ## equivalente ao while GAME
+
 # : receber assets como argumento e repassar para desenha
     while recebe_eventos():  
-       
         desenha(window)  #adcionar assets depois
 
 if __name__ == '__main__':
+    pygame.init()
         ##-- : receber assets aqui e repassar para game_loop
-    # w , assets = inicializa()
+    window = inicializa()
    
     # window.fill((0, 0, 0))
  
