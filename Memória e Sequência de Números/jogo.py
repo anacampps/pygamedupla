@@ -2,11 +2,26 @@ import pygame
 
 pygame.init()
 
+window = pygame.display.set_mode((700, 500))
+
 def incializa():
-    pass
+    # window = pygame.display.set_mode((700, 500))
+    pygame.display.set_caption('Jogo da Memória')
+
+    window.fill((0, 0, 0))
+    pygame.display.flip()
+
+    return window
+
 
 def recebe_eventos():
-    pass
+
+    game = True
+    while game:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                pygame.quit()
 
 
 def desenha():
@@ -22,6 +37,6 @@ if __name__ == '__main__':
         ##-- : receber assets aqui e repassar para game_loop
     # w , assets = inicializa()
    
-    
+    # window.fill((0, 0, 0))
  
-    # game_loop()  #window=, assets
+    game_loop(window)  #window=, assets
