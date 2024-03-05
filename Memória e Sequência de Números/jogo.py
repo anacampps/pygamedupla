@@ -42,6 +42,8 @@ def desenha(window, assets):
     caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
     
     # pygame.draw.rect(window, (255, 255, 255), (10, 10, 10, 10))
+    num_gerado= assets['font'].render(str(gera_num(x)),True, (0, 0 , 0))
+    window.blit(num_gerado, (320, 240))
 
     pygame.display.update()
 
