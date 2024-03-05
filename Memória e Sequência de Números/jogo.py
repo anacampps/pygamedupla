@@ -7,14 +7,15 @@ def inicializa():
     font = pygame.font.get_default_font()
     font = pygame.font.Font(font, 45)
 
-    assets['font'] = font                        #*
+    
+    assets['font'] = font                        
+    assets['num gerado']= gera_num(x=2)
 
     window = pygame.display.set_mode((700, 500))
     pygame.display.set_caption('Jogo da Memória')
 
     window.fill((0, 0, 0))
    
-
     return window, assets  ##
 
 
@@ -41,11 +42,15 @@ def desenha(window, assets):
 
     caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
     
-    # pygame.draw.rect(window, (255, 255, 255), (10, 10, 10, 10))
-    num_gerado= assets['font'].render(str(gera_num(x)),True, (0, 0 , 0))
+    # pygame.rect
+
+
+    num_gerado= assets['font'].render(str(assets['num gerado']),True, (0, 0 , 0))
     window.blit(num_gerado, (320, 240))
+    ##-------Aqui implementamos a primeira fase: 2 digitos--------
 
     pygame.display.update()
+
 
 def game_loop(window, assets):   ##  ## equivalente ao while GAME
 
