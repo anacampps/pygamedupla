@@ -1,5 +1,5 @@
 import pygame 
-
+from funcoes_auxiliares import *
 
 def inicializa():
     assets = {}
