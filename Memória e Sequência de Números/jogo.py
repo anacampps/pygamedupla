@@ -51,9 +51,12 @@ def desenha(window, assets):
     window.blit(num_gerado, (320, 240))
     ##-------Aqui implementamos a primeira fase: 2 digitos--------
 
+    
+    digite= assets['font'].render(str(['Digite']), True, (255, 255 ,255))
+    window.blit(digite, (200, 150))
+    
     if num_gerado== True:
-        digite= assets['font'].render(str(assets['Digite']), True, (0, 0 , 0))
-        window.blit(digite, (200, 150))
+        memorize= digite 
         
 
     pygame.display.update()
