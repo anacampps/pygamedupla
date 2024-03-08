@@ -19,6 +19,10 @@ def inicializa(): ##-- não tem argumento porque apenas cria coisas sem depender
     
     assets['num_digitado'] = ''
 
+    assets['contagem_vidas'] = 3
+    assets['contagem_acertos'] = 0
+
+
     window = pygame.display.set_mode((700, 500))
     pygame.display.set_caption('Jogo da Memória')
 
@@ -37,18 +41,30 @@ def recebe_eventos():
             game = False
             pygame.quit()
         if assets['fase'] == 'Digitar':
-          if event.type == pygame.KEYDOWN:
-             assets['num_digitado'] += event.unicode
+          if event.type == pygame.KEYDOWN: 
+             assets['num_digitado'] += event.unicode  ##-- não precisa verificar se o número tem dois dígitos no começo
         
                                             # if assets['tempo'] == 0:   ##-- inúteis
                                             #     tempo = pygame.time.get_ticks()
     atual = pygame.time.get_ticks()
     if atual - assets['tempo_passado'] > 4000:
-        assets['fase'] = 'Digitar'
         assets['tempo_passado'] = atual
 
+        if assets['fase'] == 'Digitar':
+            #
+            if assets['num gerado'] == assets['num_digitado']:
+                assets['contagem_acertos'] += 1
+                assets['qtd_dígitos_seq_num'] += 1
+                assets['fase'] = 'Memorizar'
+            else:
+                assets['contagem_vidas'] -= 1
+                assets['fase'] = 'Memorizar'
+            assets['num_digitado'] = '' ##-- tem de ficar depois do if de acerto/erro, pois se ficar antes os comandos debaixp serao ignorados--##
+            assets['num gerado'] = gera_num(assets['qtd_dígitos_seq_num']) ##-- chamando funcao para passar numero novo --##
+        else: ##-- se a fase for memorizar, tem de mudar para 'digiar' --##
+            assets['fase'] = 'Digitar'
+            
 
-    
     return game
 
 
@@ -74,6 +90,10 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
     chute = assets['font'].render(str(assets['num_digitado']), True, (0, 0, 0)) 
     window.blit(chute, (300, 330))
 
+    vidas = assets['font'].render(str('Vidas: ' + str(assets['contagem_vidas'])), True, (255, 255, 255))
+    window.blit(vidas, (10, 10))
+    acertos = assets['font'].render(str('Acertos: ' + str(assets['contagem_acertos'])), True, (255, 255, 255))
+    window.blit(acertos, (10, 50))
      #-------------------------------------------------------------------
           
     
