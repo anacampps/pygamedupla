@@ -17,6 +17,7 @@ def inicializa(): ##-- não tem argumento porque apenas cria coisas sem depender
     assets['tempo']  = 0
     assets['qtd_dígitos_seq_num'] = 2
     
+    assets['num_digitado'] = ''
 
     window = pygame.display.set_mode((700, 500))
     pygame.display.set_caption('Jogo da Memória')
@@ -35,6 +36,9 @@ def recebe_eventos():
         if event.type == pygame.QUIT:
             game = False
             pygame.quit()
+        if assets['fase'] == 'Digitar':
+          if event.type == pygame.KEYDOWN:
+             assets['num_digitado'] += event.unicode
         
                                             # if assets['tempo'] == 0:   ##-- inúteis
                                             #     tempo = pygame.time.get_ticks()
@@ -42,6 +46,7 @@ def recebe_eventos():
     if atual - assets['tempo_passado'] > 4000:
         assets['fase'] = 'Digitar'
         assets['tempo_passado'] = atual
+
 
     
     return game
@@ -65,6 +70,10 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
     else: 
         digite = assets['font'].render(str('DIGITE: '), True, (255, 255 ,255)) #
         window.blit(digite, (265, 150))
+
+    chute = assets['font'].render(str(assets['num_digitado']), True, (0, 0, 0)) 
+    window.blit(chute, (300, 330))
+
      #-------------------------------------------------------------------
           
     
