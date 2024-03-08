@@ -11,6 +11,9 @@ def inicializa():
     assets['font'] = font                        
     assets['num gerado']= gera_num(x=2)
     
+    assets['fase'] = 'Memorizar'
+    tempo_passado = pygame.time.get_ticks()
+    
 
     window = pygame.display.set_mode((700, 500))
     pygame.display.set_caption('Jogo da Memória')
