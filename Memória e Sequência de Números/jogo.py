@@ -1,7 +1,7 @@
 import pygame 
 from funcoes_auxiliares import *
 
-def inicializa():
+def inicializa(): ##-- não tem argumento porque apenas cria coisas sem depender de nada (informações externas) --##
     assets = {}
 
     font = pygame.font.get_default_font()
@@ -10,9 +10,12 @@ def inicializa():
     
     assets['font'] = font                        
     assets['num gerado']= gera_num(x=2)
-    
+
     assets['fase'] = 'Memorizar'
     tempo_passado = pygame.time.get_ticks()
+    assets['tempo_passado']= tempo_passado
+    assets['tempo']  = 0
+    assets['qtd_dígitos_seq_num'] = 2
     
 
     window = pygame.display.set_mode((700, 500))
@@ -27,41 +30,47 @@ def recebe_eventos():
 
     game = True
 
-    for event in pygame.event.get():
+    for event in pygame.event.get(): ##-- tudo que fica dentro do for event está relacionado com o mouse/teclado --##
+        # print(event)   ## -- ótimo para achar posições da tela sem rachar a cabeça --##
         if event.type == pygame.QUIT:
             game = False
             pygame.quit()
+        
+                                            # if assets['tempo'] == 0:   ##-- inúteis
+                                            #     tempo = pygame.time.get_ticks()
+    atual = pygame.time.get_ticks()
+    if atual - assets['tempo_passado'] > 4000:
+        assets['fase'] = 'Digitar'
+        assets['tempo_passado'] = atual
+
     
     return game
 
 
-def desenha(window, assets):
+def desenha(window, assets): ##-- função (sem return): não retorna nada porque desenha na tela diretamente --##
 
     window.fill((0, 0 , 0))
 
-    memorize = assets['font'].render(str('MEMORIZE....'), True, (255, 255, 255)) 
-    window.blit(memorize, (200, 150))
-    
-
     caixa_branca = pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
-
     caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
+
+    if assets['fase'] == 'Memorizar':
+        memorize = assets['font'].render(str('MEMORIZE....'), True, (255, 255, 255)) 
+        window.blit(memorize, (200, 150))
+ 
+        num_gerado= assets['font'].render(str(assets['num gerado']),True, (0, 0 , 0))  #
+        window.blit(num_gerado, (320, 240))
+        ##-------Aqui implementamos a primeira fase: 2 digitos--------
+
+    else: 
+        digite = assets['font'].render(str('DIGITE: '), True, (255, 255 ,255)) #
+        window.blit(digite, (265, 150))
+     #-------------------------------------------------------------------
+          
     
     # pygame.rect
 
-
-    num_gerado= assets['font'].render(str(assets['num gerado']),True, (0, 0 , 0))
-    window.blit(num_gerado, (320, 240))
-    ##-------Aqui implementamos a primeira fase: 2 digitos--------
-
-    
-    digite= assets['font'].render(str(['Digite']), True, (255, 255 ,255))
-    window.blit(digite, (200, 150))
-    
-    if num_gerado== True:
-        memorize= digite 
         
-
     pygame.display.update()
 
 
