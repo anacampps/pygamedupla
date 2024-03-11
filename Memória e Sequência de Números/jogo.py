@@ -21,7 +21,12 @@ def inicializa(): ##-- não tem argumento porque apenas cria coisas sem depender
 
     assets['contagem_vidas'] = 3
     assets['contagem_acertos'] = 0
-    
+
+    #pygame.mixer.music.load('C:\Users\anaju\projeto.pygame\projeto-pygame-azul\codigo\sucess-1-6287.mp3')
+    #pygame.mixer.music.play('Sucess-1-6287.mp3')
+
+    assets['acerto_som'] = pygame.mixer.Sound('success-1-6297.mp3')
+    assets['erro_som'] = pygame.mixer.Sound("negative_beeps-6008.mp3")
 
 
     window = pygame.display.set_mode((700, 500))
@@ -59,13 +64,17 @@ def recebe_eventos():
         if str(assets['num gerado']) == assets['num_digitado']: ## -- comparar sempre dous valores do mesmo tipo
             assets['contagem_acertos'] += 1
             assets['qtd_dígitos_seq_num'] += 1
+            assets['acerto_som'].play()
+
+            
         else:
             assets['contagem_vidas'] -= 1
+            assets['erro_som'].play()
         assets['fase'] = 'Memorizar'
         assets['tempo_passado'] = pygame.time.get_ticks()
         assets['num_digitado'] = '' ##-- tem de ficar depois do if de acerto/erro, pois se ficar antes os comandos debaixp serao ignorados--##
         assets['num gerado'] = gera_num(assets['qtd_dígitos_seq_num']) ##-- chamando funcao para passar numero novo --##
-
+        
     #    
 
 
