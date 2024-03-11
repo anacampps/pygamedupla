@@ -56,7 +56,7 @@ def recebe_eventos():
         if atual - assets['tempo_passado'] > 4000:
             assets['fase'] = 'Digitar'
     elif assets['fase'] == 'Verificar':
-        if assets['num gerado'] == assets['num_digitado']:
+        if str(assets['num gerado']) == assets['num_digitado']: ## -- comparar sempre dous valores do mesmo tipo
             assets['contagem_acertos'] += 1
             assets['qtd_dígitos_seq_num'] += 1
         else:
