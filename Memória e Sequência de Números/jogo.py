@@ -48,9 +48,8 @@ def recebe_eventos():
             pygame.quit()
         if assets['fase'] == 'Digitar':
             if event.type == pygame.KEYDOWN: 
-                if event.type == pygame.K_BACKSPACE:
-                    assets['num_digitado'] = assets['num_digitado'] [:-1]
-
+                if event.key == pygame.K_BACKSPACE:
+                    assets['num_digitado'] = assets['num_digitado'][:-1]
                 elif event.key == pygame.K_RETURN:
                     assets['fase'] = 'Verificar'
                 else:
