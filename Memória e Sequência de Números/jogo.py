@@ -9,7 +9,7 @@ def inicializa(): ##-- não tem argumento porque apenas cria coisas sem depender
 
     
     assets['font'] = font                        
-    assets['num gerado']= gera_num(x=2)
+    assets['num gerado']= gera_num(2)
 
     assets['fase'] = 'Memorizar'
     tempo_passado = pygame.time.get_ticks()
@@ -53,7 +53,8 @@ def recebe_eventos():
                 elif event.key == pygame.K_RETURN:
                     assets['fase'] = 'Verificar'
                 else:
-                    assets['num_digitado'] += event.unicode  ##-- não precisa verificar se o número tem dois dígitos no começo
+                    if len(assets['num_digitado']) < assets['qtd_dígitos_seq_num']:
+                        assets['num_digitado'] += event.unicode  ##-- não precisa verificar se o número tem dois dígitos no começo #=--
         
                                             # if assets['tempo'] == 0:   ##-- inúteis
              #     tempo = pygame.time.get_ticks()
@@ -103,7 +104,11 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
         window.blit(digite, (265, 150))
 
     chute = assets['font'].render(str(assets['num_digitado']), True, (0, 0, 0)) 
-    window.blit(chute, (300, 330))
+    # if len(chute) > assets['num gerado']:
+    #     assets['num_digitado'] = ''
+
+
+    window.blit(chute[0], (300, 330))
 
     vidas = assets['font'].render(str('Vidas: ' + str(assets['contagem_vidas'])), True, (255, 255, 255))
     window.blit(vidas, (10, 10))
