@@ -108,7 +108,7 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
     #     assets['num_digitado'] = ''
 
 
-    window.blit(chute[0], (300, 330))
+    window.blit(chute, (300, 330))
 
     vidas = assets['font'].render(str('Vidas: ' + str(assets['contagem_vidas'])), True, (255, 255, 255))
     window.blit(vidas, (10, 10))
