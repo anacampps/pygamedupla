@@ -54,8 +54,12 @@ def recebe_eventos():
                     assets['fase'] = 'Verificar'
                 else:
                     if len(assets['num_digitado']) < assets['qtd_dígitos_seq_num']:
-                        assets['num_digitado'] += event.unicode  ##-- não precisa verificar se o número tem dois dígitos no começo #=--
-        
+                        if event.unicode in ['0','2', '3', '4', '5', '6', '7', '8', '9']:
+                            assets['num_digitado'] += event.unicode ## unicode é o valor da tecla pressionada (event.keydown é o evento de pressionar a tecla digitada)
+                        
+                   
+                         ##-- não precisa verificar se o número tem dois dígitos no começo #=--
+                
                                             # if assets['tempo'] == 0:   ##-- inúteis
              #     tempo = pygame.time.get_ticks()
     
@@ -104,8 +108,7 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
         window.blit(digite, (265, 150))
 
     chute = assets['font'].render(str(assets['num_digitado']), True, (0, 0, 0)) 
-    # if len(chute) > assets['num gerado']:
-    #     assets['num_digitado'] = ''
+    
 
 
     window.blit(chute, (300, 330))
