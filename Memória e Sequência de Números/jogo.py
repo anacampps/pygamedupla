@@ -22,6 +22,8 @@ def inicializa(): ##-- não tem argumento porque apenas cria coisas sem depender
     assets['contagem_vidas'] = 3
     assets['contagem_acertos'] = 0
 
+    assets['pontuação_final'] = 0
+
     #pygame.mixer.music.load('C:\Users\anaju\projeto.pygame\projeto-pygame-azul\codigo\sucess-1-6287.mp3')
     #pygame.mixer.music.play('Sucess-1-6287.mp3')
 
@@ -46,6 +48,8 @@ def recebe_eventos():
         if event.type == pygame.QUIT:
             game = False
             pygame.quit()
+       
+                # game = False
         if assets['fase'] == 'Digitar':
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_BACKSPACE:
@@ -54,7 +58,7 @@ def recebe_eventos():
                     assets['fase'] = 'Verificar'
                 else:
                     if len(assets['num_digitado']) < assets['qtd_dígitos_seq_num']:
-                        if event.unicode in ['0','2', '3', '4', '5', '6', '7', '8', '9']:
+                        if event.unicode in ['0','1', '2', '3', '4', '5', '6', '7', '8', '9']:
                             assets['num_digitado'] += event.unicode ## unicode é o valor da tecla pressionada (event.keydown é o evento de pressionar a tecla digitada)
                         
                    
@@ -62,7 +66,9 @@ def recebe_eventos():
                 
                                             # if assets['tempo'] == 0:   ##-- inúteis
              #     tempo = pygame.time.get_ticks()
-    
+    if assets['contagem_vidas'] == 0:
+            assets['pontuação_final'] = assets['contagem_acertos']
+            assets['fase'] = 'pontuação_final'
     if assets['fase'] == 'Memorizar':
         atual = pygame.time.get_ticks()
         if atual - assets['tempo_passado'] > 4000:
@@ -92,10 +98,11 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
 
     window.fill((0, 0 , 0))
 
-    caixa_branca = pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
-    caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
+
 
     if assets['fase'] == 'Memorizar':
+        caixa_branca = pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
+        caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
         memorize = assets['font'].render(str('MEMORIZE....'), True, (255, 255, 255)) 
         window.blit(memorize, (200, 150))
  
@@ -104,23 +111,27 @@ def desenha(window, assets): ##-- função (sem return): não retorna nada porqu
         ##-------Aqui implementamos a primeira fase: 2 digitos--------
 
     elif assets['fase'] == 'Digitar': 
+        caixa_branca = pygame.draw.rect(window, (255, 255, 255), (100, 250, 500, 125))
+        caixa_vermelha = pygame.draw.rect(window,(255, 0, 0), (120, 230, 460, 75))
         digite = assets['font'].render(str('DIGITE: '), True, (255, 255 ,255)) #
         window.blit(digite, (265, 150))
+        # if assets['contagem_vidas'] == 0:
+        #     assets['fase'] = 'pontuação_final'
+    if assets['fase'] == 'pontuação_final':
+        assets['pontuação_final'] = assets['contagem_acertos']
+        pontuacao = assets['font'].render(str('Pontuação final: ' + str(assets['pontuação_final'])), True, (255, 255, 255))
+        window.blit(pontuacao, (200, 150))
 
-    chute = assets['font'].render(str(assets['num_digitado']), True, (0, 0, 0)) 
-    
+    else:
+        chute = assets['font'].render(str(assets['num_digitado']), True, (0, 0, 0)) 
+        window.blit(chute, (300, 330))
 
 
-    window.blit(chute, (300, 330))
-
-    vidas = assets['font'].render(str('Vidas: ' + str(assets['contagem_vidas'])), True, (255, 255, 255))
-    window.blit(vidas, (10, 10))
-    acertos = assets['font'].render(str('Acertos: ' + str(assets['contagem_acertos'])), True, (255, 255, 255))
-    window.blit(acertos, (10, 50))
+        vidas = assets['font'].render(str('Vidas: ' + str(assets['contagem_vidas'])), True, (255, 255, 255))
+        window.blit(vidas, (10, 10))
+        acertos = assets['font'].render(str('Acertos: ' + str(assets['contagem_acertos'])), True, (255, 255, 255))
+        window.blit(acertos, (10, 50))
      #-------------------------------------------------------------------
-          
-    
-    # pygame.rect
 
         
     pygame.display.update()
